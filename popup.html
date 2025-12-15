@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D4 Paragon Accessibility</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 300px;
+      padding: 15px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #e0e0e0;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 1.1rem;
+      margin: 0 0 15px 0;
+      color: #f0c040;
+      border-bottom: 1px solid #4a4a6a;
+      padding-bottom: 10px;
+    }
+
+    .status {
+      background: #252540;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+
+    .status-label {
+      font-size: 0.9rem;
+      color: #a0a0b0;
+      margin-bottom: 5px;
+    }
+
+    .status-value {
+      font-weight: bold;
+    }
+
+    .status-active {
+      color: #60ff60;
+    }
+
+    .status-inactive {
+      color: #ff6060;
+    }
+
+    .info {
+      font-size: 0.85rem;
+      color: #8080a0;
+      line-height: 1.5;
+    }
+
+    .info p {
+      margin: 8px 0;
+    }
+
+    a {
+      color: #80b0ff;
+    }
+
+    .help-section {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #4a4a6a;
+    }
+
+    .help-section h2 {
+      font-size: 0.95rem;
+      color: #c0c0d0;
+      margin: 0 0 10px 0;
+    }
+
+    .help-section ul {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 0.85rem;
+      color: #a0a0b0;
+    }
+
+    .help-section li {
+      margin: 5px 0;
+    }
+
+    kbd {
+      background: #3a3a5a;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>D4 Paragon Accessibility</h1>
+
+  <div class="status">
+    <div class="status-label">Status on this page:</div>
+    <div id="status-value" class="status-value status-inactive">Checking...</div>
+  </div>
+
+  <div class="info">
+    <p>This extension converts Mobalytics paragon board guides into accessible tables for screen reader users.</p>
+    <p>Navigate to a Diablo 4 build guide on <a href="https://mobalytics.gg/diablo-4/builds" target="_blank">Mobalytics</a> to see it in action.</p>
+  </div>
+
+  <div class="help-section">
+    <h2>Screen Reader Navigation</h2>
+    <ul>
+      <li>Use <kbd>T</kbd> to jump between tables</li>
+      <li>Use <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Arrow</kbd> to navigate cells</li>
+      <li>Selected nodes are marked with "selected" text</li>
+    </ul>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

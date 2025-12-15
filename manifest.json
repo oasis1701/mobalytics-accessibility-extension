@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "mobalytics.gg Access",
+  "version": "1.0.0",
+  "description": "Makes Diablo 4 paragon board guides accessible for screen reader users by converting visual boards to navigable tables.",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://mobalytics.gg/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://mobalytics.gg/diablo-4/*"],
+      "js": ["parser.js", "table-generator.js", "content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "mobalytics.gg Access"
+  }
+}
