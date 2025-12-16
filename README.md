@@ -1,24 +1,33 @@
-# Mobalytics Accessibility Extension for Diablo 4
+# D4 Paragon Board Accessibility Extension
 
-A Chrome extension that makes Diablo 4 build guides on [Mobalytics.gg](https://mobalytics.gg) accessible to screen reader users.
+A Chrome extension that makes Diablo 4 paragon board guides accessible to screen reader users.
+
+## Supported Sites
+
+- [Mobalytics.gg](https://mobalytics.gg/diablo-4/builds)
+- [Maxroll.gg](https://maxroll.gg/d4/build-guides)
 
 ## Overview
 
-Mobalytics.gg provides excellent Diablo 4 build guides, but the visual paragon board layouts are not accessible to screen reader users. This extension converts those visual boards into navigable HTML tables that work with screen readers like NVDA, JAWS, and VoiceOver.
+Both Mobalytics and Maxroll provide excellent Diablo 4 build guides, but the visual paragon board layouts are not accessible to screen reader users. This extension converts those visual boards into navigable HTML tables that work with screen readers like NVDA, JAWS, and VoiceOver.
 
 ## Current Features
 
 ### Paragon Board Accessibility
 
 - **Converts visual paragon boards to accessible tables** - Navigate nodes using standard table navigation
-- **Board rotation support** - Tables are rotated to match the visual orientation, so "rotated right once" means the table layout matches what sighted users see
-- **Gate connections** - Gates show which board they connect to (e.g., "Gate to Board 2: Castle / Exploit")
+- **Board rotation support** - Tables are rotated to match the visual orientation.
 - **Node information** - Each node shows its type (Normal, Magic, Rare, Legendary) and stat bonus (Str, Int, Dex, Will, Damage, etc.)
-- **Selection indicators** - Selected nodes are marked with an asterisk (*) and announced as "selected"
+- **Selection indicators** - Selected nodes are marked with an asterisk (*)
 - **Glyph information** - Glyph sockets show the equipped glyph name
 - **Board stats summary** - Shows total stats for each board (Str, Int, Dex, Will)
 - **Selected nodes summary** - Lists count of selected nodes by type
 - **Skip links** - Quickly navigate between boards
+
+Please note, We have some small but nice enhancements that only work on Mobalytics, These include:
+- **Gate connections** - Gates show which board they connect to (e.g., "Gate to Board 2: Castle / Exploit"). for Maxroll, Follow the logical connections instead. e.g. if board  2 exits from right and board three has its left gate selected, You can connect them, plus, you already know the names of each boards already.
+- **Rotation information, for each board, the extension will tell you how many times you need to press the rotate button when attaching the board, example: Rotated once. For Maxroll, read the table and rotate until it matches what you'll see.
+- **Legendary nodes contain the power names in the label for Mobalytics. For Maxroll, IT just shows as a legendary node.
 
 ### Screen Reader Optimizations
 
@@ -37,7 +46,7 @@ Mobalytics.gg provides excellent Diablo 4 build guides, but the visual paragon b
 
 ## Usage
 
-1. Navigate to any Diablo 4 build guide on Mobalytics.gg
+1. Navigate to any Diablo 4 build guide on Mobalytics.gg or Maxroll.gg
 2. The extension automatically converts paragon boards when the page loads
 3. Use your screen reader's table navigation to explore the boards
 4. Use heading navigation to jump between boards
@@ -55,9 +64,10 @@ I will add more features to cover more inaccessible sections as we find them.
 
 ## Technical Notes
 
-- The extension only activates on mobalytics.gg
+- The extension activates on mobalytics.gg and maxroll.gg D4 build pages
 - Original visual boards are hidden but preserved in the DOM
-- Board data is parsed from the page's existing HTML structure
+- Board data is parsed from each site's existing HTML structure
+- Each site uses a different parser due to different DOM structures
 
 ## Contributing
 

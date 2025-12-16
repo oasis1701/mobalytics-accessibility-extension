@@ -16,15 +16,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    // Check if we're on a Mobalytics page
+    // Check if we're on a supported page
     const url = tab.url || '';
     const isMobalytics = url.includes('mobalytics.gg/diablo-4');
+    const isMaxroll = url.includes('maxroll.gg/d4');
 
-    if (!isMobalytics) {
-      statusEl.textContent = 'Not a Mobalytics D4 page';
+    if (!isMobalytics && !isMaxroll) {
+      statusEl.textContent = 'Not a D4 build guide page';
       statusEl.className = 'status-value status-inactive';
       return;
     }
+
+    const siteName = isMobalytics ? 'Mobalytics' : 'Maxroll';
 
     // Try to check if extension has processed the page
     try {
@@ -40,10 +43,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       const boardCount = results[0]?.result || 0;
 
       if (boardCount > 0) {
-        statusEl.textContent = `Active - ${boardCount} board${boardCount > 1 ? 's' : ''} converted`;
+        statusEl.textContent = `Active on ${siteName} - ${boardCount} board${boardCount > 1 ? 's' : ''} converted`;
         statusEl.className = 'status-value status-active';
       } else {
-        statusEl.textContent = 'Waiting for paragon boards...';
+        statusEl.textContent = `On ${siteName} - Waiting for paragon boards...`;
         statusEl.className = 'status-value status-inactive';
       }
     } catch (scriptError) {

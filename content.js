@@ -1,6 +1,7 @@
 /**
  * D4 Paragon Board Accessibility Extension
  * Main content script - orchestrates parsing and table generation
+ * Supports both Mobalytics.gg and Maxroll.gg
  */
 
 (function() {
@@ -13,11 +14,56 @@
     // Store original board containers for potential restore
     originalBoards: [],
 
+    // Detect which site we're on
+    site: null,
+
+    /**
+     * Detect which site we're on
+     * @returns {string} 'mobalytics', 'maxroll', or 'unknown'
+     */
+    detectSite() {
+      const hostname = window.location.hostname;
+      if (hostname.includes('mobalytics.gg')) {
+        return 'mobalytics';
+      } else if (hostname.includes('maxroll.gg')) {
+        return 'maxroll';
+      }
+      return 'unknown';
+    },
+
+    /**
+     * Get the appropriate parser for the current site
+     * @returns {Object} Parser object
+     */
+    getParser() {
+      if (this.site === 'maxroll') {
+        return MaxrollParser;
+      }
+      return ParagonParser;
+    },
+
+    /**
+     * Get the board container selector for the current site
+     * @returns {string} CSS selector
+     */
+    getBoardContainerSelector() {
+      if (this.site === 'maxroll') {
+        return MaxrollParser.SELECTORS.embedContainer;
+      }
+      return ParagonParser.SELECTORS.boardContainer;
+    },
+
     /**
      * Initialize the extension
      */
     init() {
-      console.log('[D4 Paragon Accessibility] Initializing...');
+      this.site = this.detectSite();
+      console.log(`[D4 Paragon Accessibility] Initializing on ${this.site}...`);
+
+      if (this.site === 'unknown') {
+        console.log('[D4 Paragon Accessibility] Unknown site, extension will not run');
+        return;
+      }
 
       // Wait for page to be fully loaded
       if (document.readyState === 'loading') {
@@ -31,7 +77,7 @@
      * Called when DOM is ready
      */
     onReady() {
-      // Mobalytics uses React and loads content dynamically
+      // Both sites use React and load content dynamically
       // We need to wait for the paragon boards to appear
       this.waitForBoards();
     },
@@ -42,14 +88,15 @@
     waitForBoards() {
       const maxAttempts = 30; // 30 seconds max
       let attempts = 0;
+      const selector = this.getBoardContainerSelector();
 
       const checkForBoards = () => {
         attempts++;
 
-        const boards = document.querySelectorAll(ParagonParser.SELECTORS.boardContainer);
+        const boards = document.querySelectorAll(selector);
 
         if (boards.length > 0) {
-          console.log(`[D4 Paragon Accessibility] Found ${boards.length} board container(s)`);
+          console.log(`[D4 Paragon Accessibility] Found ${boards.length} board container(s) on ${this.site}`);
           // Give React a moment to finish rendering
           setTimeout(() => this.processBoards(), 500);
         } else if (attempts < maxAttempts) {
@@ -70,14 +117,16 @@
      * Set up mutation observer for dynamically added boards
      */
     observeForNewBoards() {
+      const selector = this.getBoardContainerSelector();
+
       const observer = new MutationObserver((mutations) => {
         // Check if any new board containers were added
         for (const mutation of mutations) {
           if (mutation.addedNodes.length > 0) {
             const hasNewBoard = Array.from(mutation.addedNodes).some(node => {
               if (node.nodeType === Node.ELEMENT_NODE) {
-                return node.matches?.(ParagonParser.SELECTORS.boardContainer) ||
-                       node.querySelector?.(ParagonParser.SELECTORS.boardContainer);
+                return node.matches?.(selector) ||
+                       node.querySelector?.(selector);
               }
               return false;
             });
@@ -112,13 +161,16 @@
       this.processing = true;
 
       try {
-        console.log('[D4 Paragon Accessibility] Processing boards...');
+        console.log(`[D4 Paragon Accessibility] Processing boards on ${this.site}...`);
+
+        // Get the appropriate parser for this site
+        const parser = this.getParser();
 
         // Parse all boards
-        const boards = ParagonParser.parseAllBoards();
+        const boards = parser.parseAllBoards();
 
         // Calculate gate connections now that we have all boards
-        ParagonParser.calculateGateConnections(boards);
+        parser.calculateGateConnections(boards);
 
         if (boards.length === 0) {
           console.log('[D4 Paragon Accessibility] No boards with nodes found');
@@ -168,8 +220,13 @@
       const heading = document.createElement('h2');
       heading.className = 'd4a-board-heading';
       heading.id = `d4a-board-${board.index}`;
-      const rotationText = TableGenerator.formatRotation(board.rotation || 0);
-      heading.textContent = `Board ${board.index}: ${board.fullName || board.name}. ${rotationText}`;
+      let headingText = `Board ${board.index}: ${board.fullName || board.name}`;
+      // Only show rotation info for mobalytics (maxroll data is pre-rotated)
+      if (this.site === 'mobalytics') {
+        const rotationText = TableGenerator.formatRotation(board.rotation || 0);
+        headingText += `. ${rotationText}`;
+      }
+      heading.textContent = headingText;
       accessibleContainer.appendChild(heading);
 
       // Add stats info (as separate element to avoid NVDA reading caption twice)

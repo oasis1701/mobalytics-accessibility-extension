@@ -8,6 +8,17 @@ const TableGenerator = {
   // This file provides table generation and helper utilities
 
   /**
+   * Get a node at a specific grid position
+   * @param {Object} grid - Grid object (from any parser)
+   * @param {number} row - Row index
+   * @param {number} col - Column index
+   * @returns {Object|null} Node at position or null
+   */
+  getNodeAt(grid, row, col) {
+    return grid[`${row},${col}`] || null;
+  },
+
+  /**
    * Generate an accessible table for a single board
    * @param {Object} board - Parsed board object
    * @returns {HTMLTableElement} The accessible table
@@ -42,7 +53,7 @@ const TableGenerator = {
           normalizedRotation
         );
 
-        const node = ParagonParser.getNodeAt(board.grid, row, col);
+        const node = this.getNodeAt(board.grid, row, col);
         const td = this.createDataCell(node, displayRow + 1, displayCol + 1);
         tr.appendChild(td);
       }
@@ -170,7 +181,7 @@ const TableGenerator = {
       if (node.connectsTo) {
         parts.push(`Gate to Board ${node.connectsTo.index}: ${node.connectsTo.name}`);
       } else {
-        parts.push('Gate (no connection)');
+        parts.push('Gate');
       }
     } else if (node.isGlyph || node.type === 'glyph') {
       // Show glyph name if available (e.g., "Glyph: Apostle")
