@@ -57,6 +57,8 @@ When you open a build guide in Mobalytics.gg, underneath the Skill Tree heading,
 Please note, this path is most accurate if you're viewing a leveling guide. End game builds assume you'll have enough skill points and might not have an accurate leveling path
 I will try to make the skill tree accessible for faster end game build reading.
 
+On Maxroll, some guides have accessible skill trees but some don't. We'll try to make them accessible to screen readers if we can in the future.
+
 ## Planned Features
 
 I will add more features to cover more inaccessible sections as we find them.
