@@ -1,6 +1,6 @@
-# D4 Paragon Board Accessibility Extension
+# D4 Guides Accessibility Extension
 
-A Chrome extension that makes Diablo 4 paragon board guides accessible to screen reader users.
+A Chrome extension that makes Diablo 4 build guides accessible to screen reader users.
 
 ## Supported Sites
 
@@ -25,9 +25,9 @@ Both Mobalytics and Maxroll provide excellent Diablo 4 build guides, but the vis
 - **Skip links** - Quickly navigate between boards
 
 Please note, We have some small but nice enhancements that only work on Mobalytics, These include:
-- **Gate connections** - Gates show which board they connect to (e.g., "Gate to Board 2: Castle / Exploit"). for Maxroll, Follow the logical connections instead. e.g. if board  2 exits from right and board three has its left gate selected, You can connect them, plus, you already know the names of each boards already.
-- **Rotation information, for each board, the extension will tell you how many times you need to press the rotate button when attaching the board, example: Rotated once. For Maxroll, read the table and rotate until it matches what you'll see.
-- **Legendary nodes contain the power names in the label for Mobalytics. For Maxroll, IT just shows as a legendary node.
+- Gate connections** - Gates show which board they connect to (e.g., "Gate to Board 2: Castle / Exploit"). for Maxroll, Follow the logical connections instead. e.g. if board  2 exits from right and board three has its left gate selected, You can connect them, plus, you already know the names of each boards already.
+- Rotation information, for each board, the extension will tell you how many times you need to press the rotate button when attaching the board, example: Rotated once. For Maxroll, read the table and rotate until it matches what you'll see.
+- Legendary nodes contain the power names in the label for Mobalytics. For Maxroll, IT just shows as a legendary node.
 
 ### Screen Reader Optimizations
 
